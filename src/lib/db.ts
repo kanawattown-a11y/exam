@@ -1,3 +1,5 @@
+'use server';
+
 import turso from './turso';
 import type {
     Settings,
