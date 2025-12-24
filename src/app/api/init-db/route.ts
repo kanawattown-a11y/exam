@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { initializeDatabase } from '@/lib/turso';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export async function GET() {
     try {
