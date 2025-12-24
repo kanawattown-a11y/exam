@@ -1,11 +1,25 @@
-import { createClient } from '@libsql/client';
+import { createClient, type Client } from '@libsql/client';
 
-// إنشاء اتصال Turso
-const turso = createClient({
-    url: process.env.TURSO_DATABASE_URL || '',
-    authToken: process.env.TURSO_AUTH_TOKEN,
-});
+// اتصال Turso - يتم تحميلة عند الطلب لتجنب أخطاء البناء
+let tursoClient: Client | null = null;
 
+export function getTursoClient(): Client {
+    if (!tursoClient) {
+        const url = process.env.TURSO_DATABASE_URL;
+        if (!url) {
+            // في حالة البناء أو نسيان المتغير، نرجع كائن وهمي لا يسبب انهيار التطبيق فوراً
+            console.warn('⚠️ TURSO_DATABASE_URL is not set!');
+            return createClient({ url: 'libsql://temp.turso.io' });
+        }
+        tursoClient = createClient({
+            url: url,
+            authToken: process.env.TURSO_AUTH_TOKEN,
+        });
+    }
+    return tursoClient;
+}
+
+const turso = getTursoClient();
 export default turso;
 
 // تهيئة قاعدة البيانات

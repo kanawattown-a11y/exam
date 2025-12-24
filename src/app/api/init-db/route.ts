@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { initializeDatabase } from '@/lib/turso';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const success = await initializeDatabase();
