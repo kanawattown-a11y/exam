@@ -1,0 +1,385 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Primary Color Palette */
+  --primary: #4788c8;
+  --primary-dark: #3a6fa3;
+  --primary-light: #6ba3d9;
+  --primary-50: #f0f7fc;
+  --primary-100: #e0eff9;
+
+  /* Status Colors */
+  --success: #10b981;
+  --success-light: #34d399;
+  --warning: #f59e0b;
+  --warning-light: #fbbf24;
+  --error: #ef4444;
+  --error-light: #f87171;
+
+  /* Dark Theme Colors */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #334155;
+  --bg-card-hover: #475569;
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Borders */
+  --border-color: rgba(148, 163, 184, 0.2);
+  --border-color-hover: rgba(148, 163, 184, 0.4);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+
+  /* Glass Effect */
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(148, 163, 184, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Glass Effect Utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-strong {
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient Background */
+.gradient-bg {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glow Effects */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(71, 136, 200, 0.3),
+    0 0 40px rgba(71, 136, 200, 0.1);
+}
+
+.glow-primary-strong {
+  box-shadow: 0 0 30px rgba(71, 136, 200, 0.5),
+    0 0 60px rgba(71, 136, 200, 0.2);
+}
+
+.glow-success {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3),
+    0 0 40px rgba(16, 185, 129, 0.1);
+}
+
+/* Button Styles */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer text-sm sm:text-base;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-600 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  box-shadow: 0 4px 14px rgba(71, 136, 200, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(71, 136, 200, 0.6);
+}
+
+.btn-secondary {
+  @apply bg-dark-700 text-white hover:bg-dark-600 border border-dark-600 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-success {
+  @apply bg-emerald-500 text-white hover:bg-emerald-600 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white hover:bg-red-600 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+/* Input Styles */
+.input {
+  @apply w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-dark-800 border border-dark-600 rounded-xl text-white placeholder-dark-400 transition-all duration-300 text-sm sm:text-base;
+}
+
+.input:focus {
+  @apply outline-none border-primary ring-2 ring-primary/20;
+}
+
+.input:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.input-lg {
+  @apply text-base sm:text-lg py-3 sm:py-4 px-4 sm:px-6;
+}
+
+/* Card Styles */
+.card {
+  @apply bg-dark-800 rounded-2xl border border-dark-700 p-4 sm:p-6;
+}
+
+.card-glass {
+  @apply glass rounded-2xl p-4 sm:p-6;
+}
+
+/* Countdown Digit Styles */
+.countdown-digit {
+  @apply relative flex flex-col items-center justify-center;
+}
+
+.countdown-value {
+  @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold;
+  background: linear-gradient(180deg, #ffffff 0%, var(--primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(71, 136, 200, 0.5);
+}
+
+.countdown-label {
+  @apply text-sm sm:text-base md:text-lg text-dark-400 mt-2;
+}
+
+/* Result Card Animation */
+.result-card {
+  @apply relative overflow-hidden;
+}
+
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(71, 136, 200, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.result-card:hover::before {
+  left: 100%;
+}
+
+/* Subject Grade Bar */
+.grade-bar {
+  @apply relative h-2 bg-dark-700 rounded-full overflow-hidden;
+}
+
+.grade-bar-fill {
+  @apply absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out;
+}
+
+/* Loading Spinner */
+.spinner {
+  @apply w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin;
+}
+
+/* Fade In Animation */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide Up Animation */
+.slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse Animation for Timer */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(71, 136, 200, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(71, 136, 200, 0.6);
+  }
+}
+
+/* Print Styles for Export */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Responsive Typography */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Table Styles */
+.table-modern {
+  @apply w-full border-collapse;
+}
+
+.table-modern th {
+  @apply bg-dark-700 text-primary font-semibold py-3 sm:py-4 px-2 sm:px-4 text-right text-xs sm:text-sm;
+}
+
+.table-modern td {
+  @apply py-3 sm:py-4 px-2 sm:px-4 border-b border-dark-700 text-xs sm:text-sm;
+}
+
+.table-modern tr:hover td {
+  @apply bg-dark-700/50;
+}
+
+/* Progress Ring */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 1s ease-out;
+}
+
+/* Notification Badge */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-success {
+  @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30;
+}
+
+.badge-warning {
+  @apply bg-amber-500/20 text-amber-400 border border-amber-500/30;
+}
+
+.badge-error {
+  @apply bg-red-500/20 text-red-400 border border-red-500/30;
+}
+
+.badge-info {
+  @apply bg-primary/20 text-primary-300 border border-primary/30;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-dark-700 text-sm rounded-lg opacity-0 invisible transition-all duration-200;
+  white-space: nowrap;
+}
+
+.tooltip:hover::after {
+  @apply opacity-100 visible;
+}

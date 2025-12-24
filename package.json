@@ -1,0 +1,39 @@
+{
+  "name": "exam-results-jabal-bashan",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.15",
+    "bcryptjs": "2.4.3",
+    "clsx": "^2.1.1",
+    "framer-motion": "11.0.0",
+    "html-to-image": "1.11.11",
+    "jose": "5.2.0",
+    "lucide-react": "0.372.0",
+    "next": "14.2.0",
+    "papaparse": "5.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "^2.2.0",
+    "xlsx": "0.18.5"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
+    "@types/node": "20.11.0",
+    "@types/papaparse": "5.3.14",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "autoprefixer": "10.4.17",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.2.0",
+    "postcss": "8.4.33",
+    "tailwindcss": "3.4.1",
+    "typescript": "5.3.3"
+  }
+}
