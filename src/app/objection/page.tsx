@@ -156,8 +156,7 @@ export default function ObjectionPage() {
                                 value={formData.subscriptionNumber}
                                 onChange={(e) => setFormData({ ...formData, subscriptionNumber: e.target.value })}
                                 placeholder="أدخل رقم الاكتتاب"
-                                className="input pl-12"
-                                dir="ltr"
+                                className="input pl-12 text-right"
                             />
                         </div>
                     </div>
@@ -212,8 +211,7 @@ export default function ObjectionPage() {
                                 value={formData.phone}
                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="للتواصل معك"
-                                className="input pl-12"
-                                dir="ltr"
+                                className="input pl-12 text-right"
                             />
                         </div>
                     </div>
