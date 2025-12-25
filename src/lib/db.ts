@@ -26,24 +26,36 @@ const PASSING_PERCENTAGE = 50;
 // ==========================================
 
 export async function getSettings(): Promise<Settings> {
-    const result = await turso.execute('SELECT * FROM settings WHERE id = 1');
-    if (result.rows.length === 0) {
+    try {
+        const result = await turso.execute('SELECT * FROM settings WHERE id = 1');
+        if (result.rows.length === 0) {
+            return {
+                id: 1,
+                isResultsOpen: false,
+                countdownEnd: null,
+                announcementText: null,
+                updatedAt: new Date().toISOString(),
+            };
+        }
+        const row = result.rows[0];
+        return {
+            id: row.id as number,
+            isResultsOpen: Boolean(row.is_results_open),
+            countdownEnd: row.countdown_end as string | null,
+            announcementText: row.announcement_text as string | null,
+            updatedAt: row.updated_at as string || new Date().toISOString(),
+        };
+    } catch (error) {
+        console.error('Error fetching settings:', error);
+        // إرجاع إعدادات افتراضية في حالة الفشل لتجنب انهيار الصفحة
         return {
             id: 1,
             isResultsOpen: false,
             countdownEnd: null,
-            announcementText: null,
+            announcementText: '⚠️ نعتذر، هناك مشكلة في الاتصال بقاعدة البيانات حالياً.',
             updatedAt: new Date().toISOString(),
         };
     }
-    const row = result.rows[0];
-    return {
-        id: row.id as number,
-        isResultsOpen: Boolean(row.is_results_open),
-        countdownEnd: row.countdown_end as string | null,
-        announcementText: row.announcement_text as string | null,
-        updatedAt: row.updated_at as string || new Date().toISOString(),
-    };
 }
 
 export async function updateSettings(data: Partial<Settings>): Promise<boolean> {
