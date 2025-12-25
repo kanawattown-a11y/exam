@@ -1,16 +1,22 @@
-import { createClient, type Client } from '@libsql/client';
+import { createClient, type Client } from '@libsql/client/web';
 
 // اتصال Turso - يتم تحميلة عند الطلب لتجنب أخطاء البناء
 let tursoClient: Client | null = null;
 
 export function getTursoClient(): Client {
     if (!tursoClient) {
-        const url = process.env.TURSO_DATABASE_URL;
+        let url = process.env.TURSO_DATABASE_URL;
         if (!url) {
             // في حالة البناء أو نسيان المتغير، نرجع كائن وهمي لا يسبب انهيار التطبيق فوراً
             console.warn('⚠️ TURSO_DATABASE_URL is not set!');
             return createClient({ url: 'libsql://temp.turso.io' });
         }
+
+        // تحويل الرابط إلى https إذا كان يبدأ بـ libsql لضمان التوافق مع متصفحات Edge
+        if (url.startsWith('libsql://')) {
+            url = url.replace('libsql://', 'https://');
+        }
+
         tursoClient = createClient({
             url: url,
             authToken: process.env.TURSO_AUTH_TOKEN,
@@ -19,7 +25,15 @@ export function getTursoClient(): Client {
     return tursoClient;
 }
 
-const turso = getTursoClient();
+// Proxy object to allow 'import turso from "./turso"' while remaining lazy
+// This prevents crashes if process.env is not available during module load
+const turso = {
+    execute: (stmt: any) => getTursoClient().execute(stmt),
+    batch: (stmts: any[], mode?: any) => getTursoClient().batch(stmts, mode),
+    transaction: (mode?: any) => getTursoClient().transaction(mode),
+    close: () => getTursoClient().close(),
+} as Client;
+
 export default turso;
 
 // تهيئة قاعدة البيانات
