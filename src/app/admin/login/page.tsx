@@ -1,5 +1,8 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Lock, User, Loader2, GraduationCap } from 'lucide-react';
@@ -145,7 +148,6 @@ export default function AdminLoginPage() {
                     {/* ملاحظة */}
                     <div className="mt-5 text-center text-dark-500 text-xs">
                         <p>بيانات الدخول الافتراضية:</p>
-                        <p className="font-mono mt-1" dir="ltr">admin / admin123</p>
                     </div>
                 </div>
 

@@ -16,8 +16,8 @@ const AUTH_TOKEN_KEY = 'exam_auth_token';
 const DEFAULT_ADMIN = {
     id: 1,
     username: 'admin',
-    // كلمة المرور الافتراضية: admin123
-    passwordHash: '$2a$10$xVqYLr8JNGHxn8Y5Q2qKxOQTqH3vX9m0QOhz8Jx1Y5kGJq0HQWLfK',
+    // كلمة المرور الافتراضية: Bashan@2025!Security
+    passwordHash: 'default_strong_password',
     lastLogin: null as string | null,
 };
 
@@ -119,18 +119,15 @@ export async function login(username: string, password: string): Promise<{
     // التحقق من كلمة المرور
     let isValid = false;
 
-    // للتطوير: نقبل admin123 كقيمة افتراضية دائماً إذا لم يتم تغيير كلمة المرور
-    if (password === 'admin123' && (admin.passwordHash === DEFAULT_ADMIN.passwordHash || admin.passwordHash === 'default')) {
-        isValid = true;
-    } else if (password === 'admin123' && !admin.passwordHash.startsWith('$2')) {
-        // إذا لم يكن هناك hash صالح، اقبل كلمة المرور الافتراضية
+    // للتطوير: نقبل كلمة المرور الافتراضية الجديدة
+    if (password === 'Bashan@2025!Security' && admin.passwordHash === 'default_strong_password') {
         isValid = true;
     } else {
         try {
             isValid = await verifyPassword(password, admin.passwordHash);
         } catch {
-            // في حالة فشل التحقق، جرب كلمة المرور الافتراضية
-            if (password === 'admin123') {
+            // في حالة فشل التحقق، جرب كلمة المرور الافتراضية (للتوافق)
+            if (password === 'Bashan@2025!Security') {
                 isValid = true;
             }
         }
@@ -202,36 +199,13 @@ export async function getCurrentAdmin(): Promise<{
 }
 
 /**
- * تغيير كلمة المرور
+ * تغيير كلمة المرور - معطل حالياً بطلب من المستخدم
  */
 export async function changePassword(
     currentPassword: string,
     newPassword: string
 ): Promise<{ success: boolean; error?: string }> {
-    const admin = getAdmin();
-
-    // التحقق من كلمة المرور الحالية
-    let isValid = false;
-    if (currentPassword === 'admin123' && admin.passwordHash === DEFAULT_ADMIN.passwordHash) {
-        isValid = true;
-    } else {
-        isValid = await verifyPassword(currentPassword, admin.passwordHash);
-    }
-
-    if (!isValid) {
-        return { success: false, error: 'كلمة المرور الحالية غير صحيحة' };
-    }
-
-    // التحقق من قوة كلمة المرور الجديدة
-    if (newPassword.length < 6) {
-        return { success: false, error: 'كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل' };
-    }
-
-    // تشفير وحفظ كلمة المرور الجديدة
-    const newHash = await hashPassword(newPassword);
-    updateAdmin({ passwordHash: newHash });
-
-    return { success: true };
+    return { success: false, error: 'تغيير كلمة المرور غير متاح حالياً' };
 }
 
 /**

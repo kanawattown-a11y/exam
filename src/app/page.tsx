@@ -1,5 +1,8 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
 import { useState, useEffect, useCallback } from 'react';
 import { GraduationCap, Sparkles, ArrowRight } from 'lucide-react';
 import CountdownTimer from '@/components/countdown/CountdownTimer';
