@@ -33,13 +33,58 @@ export default function ResultCard({ result }: ResultCardProps) {
                 backgroundColor: '#0f172a',
             });
 
-            // تحويل Base64 إلى Blob
-            const response = await fetch(dataUrl);
-            const blob = await response.blob();
-
-            // تحميل الصورة
             const filename = `نتيجة_${student.subscriptionNumber}_${student.fullName.replace(/\s/g, '_')}.png`;
-            createDownloadUrl(blob, filename);
+
+            // فتح الصورة في نافذة جديدة للحفظ (يعمل على الأندرويد والويب)
+            const newWindow = window.open('', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html dir="rtl">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>حفظ النتيجة - ${student.fullName}</title>
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 20px;
+                                background: #0f172a;
+                                text-align: center;
+                                font-family: sans-serif;
+                            }
+                            .info {
+                                color: white;
+                                margin-bottom: 20px;
+                                font-size: 16px;
+                            }
+                            img {
+                                max-width: 100%;
+                                border-radius: 16px;
+                                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                            }
+                            .download-btn {
+                                display: inline-block;
+                                margin-top: 20px;
+                                padding: 12px 24px;
+                                background: #4788c8;
+                                color: white;
+                                text-decoration: none;
+                                border-radius: 12px;
+                                font-weight: bold;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <p class="info">📱 اضغط مطولاً على الصورة لحفظها</p>
+                        <img src="${dataUrl}" alt="نتيجة الطالب"/>
+                        <br>
+                        <a href="${dataUrl}" download="${filename}" class="download-btn">💾 تحميل الصورة</a>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            }
 
             setExportSuccess(true);
             setTimeout(() => setExportSuccess(false), 3000);

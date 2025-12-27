@@ -183,12 +183,46 @@ export function isValidFileType(filename: string, allowedTypes: string[]): boole
  * إنشاء URL للتحميل
  */
 export function createDownloadUrl(data: Blob, filename: string): void {
+    // محاولة التحميل المباشر أولاً
     const url = URL.createObjectURL(data);
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
+    a.style.display = 'none';
     document.body.appendChild(a);
-    a.click();
+
+    // التحقق من دعم التحميل (Android WebView قد لا يدعمه)
+    try {
+        a.click();
+
+        // للأندرويد: إذا لم ينجح التحميل، نفتح الصورة في تبويب جديد
+        setTimeout(() => {
+            // تحويل Blob إلى Data URL لفتحه
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // فتح الصورة في نافذة جديدة للحفظ اليدوي
+                const dataUrl = reader.result as string;
+                // إنشاء صفحة بسيطة تحتوي الصورة
+                const newWindow = window.open('', '_blank');
+                if (newWindow) {
+                    newWindow.document.write(`
+                        <html dir="rtl">
+                        <head><title>حفظ النتيجة</title></head>
+                        <body style="margin:0;padding:20px;background:#1e293b;text-align:center;">
+                            <p style="color:white;font-family:sans-serif;margin-bottom:20px;">اضغط مطولاً على الصورة لحفظها</p>
+                            <img src="${dataUrl}" style="max-width:100%;border-radius:16px;"/>
+                        </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                }
+            };
+            reader.readAsDataURL(data);
+        }, 500);
+    } catch (error) {
+        console.error('Download failed:', error);
+    }
+
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }

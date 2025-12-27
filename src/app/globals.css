@@ -252,38 +252,16 @@ body {
   @apply w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin;
 }
 
-/* Fade In Animation */
+/* Fade In Animation - runs once only */
 .fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Slide Up Animation */
+/* Slide Up Animation - runs once only */
 .slide-up {
-  animation: slideUp 0.5s ease-out forwards;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Pulse Animation for Timer */
