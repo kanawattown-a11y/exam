@@ -2,10 +2,10 @@
 node_modules/
 .pnp
 .pnp.js
-
+android/
 # Testing
 coverage/
-
+android/
 # Next.js
 .next/
 out/

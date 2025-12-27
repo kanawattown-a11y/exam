@@ -114,12 +114,16 @@ export default function HomePage() {
             </div>
 
             {/* المحتوى الرئيسي */}
-            <div className="relative z-10 container mx-auto px-4 py-8 md:py-12">
+            <div className="relative z-10 container mx-auto px-2 sm:px-4 py-6 sm:py-8 md:py-12">
                 {/* الشعار والعنوان */}
-                <header className="text-center mb-12 md:mb-16 fade-in">
+                <header className="text-center mb-8 sm:mb-12 md:mb-16 fade-in">
                     {/* الأيقونة */}
-                    <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-primary to-primary-dark mb-6 glow-primary-strong">
-                        <GraduationCap className="w-10 h-10 md:w-12 md:h-12 text-white" />
+                    <div className="inline-flex items-center justify-center mb-6">
+                        <img
+                            src="/logo.jpg"
+                            alt="شعار مديرية التربية والتعليم"
+                            className="w-24 h-24 md:w-32 md:h-32 rounded-3xl object-contain shadow-2xl"
+                        />
                     </div>
 
                     {/* العنوان الرئيسي */}

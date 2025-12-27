@@ -25,21 +25,36 @@ export default function ResultCard({ result }: ResultCardProps) {
         setExportSuccess(false);
 
         try {
-            // إضافة padding مؤقت للتصدير
             const element = cardRef.current;
-            const originalPadding = element.style.padding;
-            element.style.padding = '32px';
+
+            // حفظ الحالة الأصلية
+            const originalOverflow = element.style.overflow;
+            const originalMaxHeight = element.style.maxHeight;
+
+            // إزالة أي قيود على الارتفاع والتمرير مؤقتاً
+            element.style.overflow = 'visible';
+            element.style.maxHeight = 'none';
+
+            // الانتظار لضمان اكتمال الـ render
+            await new Promise(resolve => setTimeout(resolve, 100));
 
             const dataUrl = await toPng(element, {
                 quality: 1,
-                pixelRatio: 3, // جودة عالية جداً
+                pixelRatio: 3,
                 backgroundColor: '#0f172a',
+                cacheBust: true,
+                width: element.scrollWidth,
+                height: element.scrollHeight,
                 style: {
                     transform: 'scale(1)',
+                    margin: '0',
+                    padding: '0',
                 },
             });
 
-            element.style.padding = originalPadding;
+            // إعادة الحالة الأصلية
+            element.style.overflow = originalOverflow;
+            element.style.maxHeight = originalMaxHeight;
 
             // تحويل Base64 إلى Blob
             const response = await fetch(dataUrl);
@@ -91,9 +106,12 @@ export default function ResultCard({ result }: ResultCardProps) {
                                 {student.certificateType?.name || 'الشهادة الثانوية العامة'} - {student.certificateType?.year || '2024-2025'}
                             </p>
                         </div>
-                        <div className="text-left">
-                            <div className="text-primary font-bold text-lg">جبل باشان</div>
-                            <div className="text-dark-400 text-sm">Jabal Bashan</div>
+                        <div className="flex-shrink-0">
+                            <img
+                                src="/logo.jpg"
+                                alt="شعار مديرية التربية والتعليم"
+                                className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-contain"
+                            />
                         </div>
                     </div>
 

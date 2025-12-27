@@ -12,7 +12,12 @@ export const metadata: Metadata = {
         locale: 'ar_SY',
         type: 'website',
     },
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    viewport: {
+        width: 'device-width',
+        initialScale: 1,
+        maximumScale: 5,
+        userScalable: true,
+    },
     themeColor: '#4788c8',
 };
 
@@ -24,7 +29,8 @@ export default function RootLayout({
     return (
         <html lang="ar" dir="rtl" suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+                <link rel="icon" href="/logo.jpg" type="image/jpeg" />
+                <link rel="apple-touch-icon" href="/logo.jpg" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             </head>
