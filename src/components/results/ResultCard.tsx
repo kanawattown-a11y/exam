@@ -27,34 +27,11 @@ export default function ResultCard({ result }: ResultCardProps) {
         try {
             const element = cardRef.current;
 
-            // حفظ الحالة الأصلية
-            const originalOverflow = element.style.overflow;
-            const originalMaxHeight = element.style.maxHeight;
-
-            // إزالة أي قيود على الارتفاع والتمرير مؤقتاً
-            element.style.overflow = 'visible';
-            element.style.maxHeight = 'none';
-
-            // الانتظار لضمان اكتمال الـ render
-            await new Promise(resolve => setTimeout(resolve, 100));
-
             const dataUrl = await toPng(element, {
                 quality: 1,
                 pixelRatio: 3,
                 backgroundColor: '#0f172a',
-                cacheBust: true,
-                width: element.scrollWidth,
-                height: element.scrollHeight,
-                style: {
-                    transform: 'scale(1)',
-                    margin: '0',
-                    padding: '0',
-                },
             });
-
-            // إعادة الحالة الأصلية
-            element.style.overflow = originalOverflow;
-            element.style.maxHeight = originalMaxHeight;
 
             // تحويل Base64 إلى Blob
             const response = await fetch(dataUrl);
@@ -75,14 +52,26 @@ export default function ResultCard({ result }: ResultCardProps) {
     };
 
     const handleShare = async () => {
+        const shareText = `حصل الطالب ${student.fullName} على مجموع ${totalGrade} من ${maxTotalGrade} بنسبة ${percentage.toFixed(2)}%`;
+
         if (navigator.share) {
             try {
                 await navigator.share({
                     title: `نتيجة ${student.fullName}`,
-                    text: `حصل الطالب ${student.fullName} على مجموع ${totalGrade} من ${maxTotalGrade} بنسبة ${percentage.toFixed(2)}%`,
+                    text: shareText,
                 });
             } catch (error) {
-                // المستخدم ألغى المشاركة
+                // إذا فشلت المشاركة، ننسخ للحافظة
+                await navigator.clipboard.writeText(shareText);
+                alert('تم نسخ النتيجة للحافظة!');
+            }
+        } else {
+            // نسخ للحافظة كبديل
+            try {
+                await navigator.clipboard.writeText(shareText);
+                alert('تم نسخ النتيجة للحافظة!');
+            } catch {
+                alert(shareText);
             }
         }
     };
@@ -313,12 +302,10 @@ export default function ResultCard({ result }: ResultCardProps) {
                     )}
                 </button>
 
-                {typeof navigator !== 'undefined' && 'share' in navigator && (
-                    <button onClick={handleShare} className="btn btn-secondary w-full sm:w-auto">
-                        <Share2 className="w-5 h-5" />
-                        مشاركة النتيجة
-                    </button>
-                )}
+                <button onClick={handleShare} className="btn btn-secondary w-full sm:w-auto">
+                    <Share2 className="w-5 h-5" />
+                    مشاركة النتيجة
+                </button>
             </div>
 
             {/* رابط تقديم اعتراض */}

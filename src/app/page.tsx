@@ -114,9 +114,9 @@ export default function HomePage() {
             </div>
 
             {/* المحتوى الرئيسي */}
-            <div className="relative z-10 container mx-auto px-2 sm:px-4 py-6 sm:py-8 md:py-12">
+            <div className="relative z-10 container mx-auto px-4 py-8 md:py-12">
                 {/* الشعار والعنوان */}
-                <header className="text-center mb-8 sm:mb-12 md:mb-16 fade-in">
+                <header className="text-center mb-12 md:mb-16 fade-in">
                     {/* الأيقونة */}
                     <div className="inline-flex items-center justify-center mb-6">
                         <img

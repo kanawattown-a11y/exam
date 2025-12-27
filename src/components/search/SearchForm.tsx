@@ -45,13 +45,13 @@ export default function SearchForm({ onSearch, isLoading = false, error = null }
     const displayError = validationError || error;
 
     return (
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto px-2 sm:px-4">
+        <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto px-4">
             {/* العنوان */}
-            <div className="text-center mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">
+            <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold mb-3">
                     <span className="gradient-text">البحث عن النتيجة</span>
                 </h2>
-                <p className="text-dark-400 text-sm sm:text-base">
+                <p className="text-dark-400">
                     أدخل رقم الاكتتاب للحصول على نتيجتك
                 </p>
             </div>
@@ -77,7 +77,7 @@ export default function SearchForm({ onSearch, isLoading = false, error = null }
                             onChange={handleChange}
                             placeholder="أدخل رقم الاكتتاب..."
                             disabled={isLoading}
-                            className="flex-1 bg-transparent text-base sm:text-lg md:text-xl text-white placeholder-dark-400 outline-none px-2 py-2 sm:py-3 disabled:opacity-50 min-w-0"
+                            className="flex-1 bg-transparent text-lg md:text-xl text-white placeholder-dark-400 outline-none px-2 py-3 disabled:opacity-50"
                             autoComplete="off"
                             dir="ltr"
                         />
@@ -86,10 +86,10 @@ export default function SearchForm({ onSearch, isLoading = false, error = null }
                         <button
                             type="submit"
                             disabled={isLoading || !value}
-                            className="flex-shrink-0 btn-primary px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-xl text-sm sm:text-base md:text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-shrink-0 btn-primary px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isLoading ? (
-                                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                                <Loader2 className="w-5 h-5 animate-spin" />
                             ) : (
                                 'بحث'
                             )}
