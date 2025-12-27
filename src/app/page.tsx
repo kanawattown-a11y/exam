@@ -104,7 +104,7 @@ export default function HomePage() {
     }
 
     return (
-        <main className="min-h-screen relative overflow-hidden">
+        <main className="min-h-screen relative">
             {/* خلفية متحركة */}
             <div className="fixed inset-0 pointer-events-none">
                 {/* دوائر متوهجة */}
